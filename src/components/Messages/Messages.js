@@ -31,7 +31,6 @@ class Messages extends React.Component {
     this.state.messagesRef.child(channelId).on('child_added', snap => {
       loadedMessages.push(snap.val())
       this.setState({ messages: loadedMessages, messagesLoading: false})
-      console.log(loadedMessages)
     })
   }
 

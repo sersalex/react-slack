@@ -21,7 +21,8 @@ class MessageForm extends React.Component {
       timestamp: firebase.database.ServerValue.TIMESTAMP,
       user: {
         id: user.uid,
-        name: user.displayName
+        name: user.displayName,
+        avatar: user.photoURL
       },
       content: this.state.message
     }
