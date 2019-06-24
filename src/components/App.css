@@ -5,7 +5,7 @@ html, body, .app {
 }
 
 .messages {
-  height: 440px;
+  height: 62vh;
   overflow-y: scroll;
 }
 
@@ -18,7 +18,16 @@ html, body, .app {
   z-index: 200;
 }
 
+.messages__progress {
+  height: 58vh;
+  overflow-y: scroll;
+}
+
 .message__self {
   border-left: 2px solid orange;
   padding-left: 8px;
+}
+
+.progress__bar {
+  margin: 0.3em 0 0 0 !important;
 }

@@ -1,16 +1,48 @@
-import React from 'react';
-import { Modal, ModalHeader, ModalContent, Input, ModalActions, Button, Icon } from 'semantic-ui-react';
+import React from "react";
+import mime from "mime-types";
+import { Modal, ModalHeader, ModalActions, ModalContent, Input, Button, Icon } from "semantic-ui-react";
 
 class FileModal extends React.Component {
-  render () {
+  state = {
+    file: null,
+    authorized: ["image/jpeg", "image/png"]
+  };
+
+  addFile = event => {
+    const file = event.target.files[0];
+    if (file) {
+      this.setState({ file });
+    }
+  };
+
+  sendFile = () => {
+    const { file } = this.state;
+    const { uploadFile, closeModal } = this.props;
+
+    if (file !== null) {
+      if (this.isAuthorized(file.name)) {
+        const metadata = { contentType: mime.lookup(file.name) };
+        uploadFile(file, metadata);
+        closeModal();
+        this.clearFile();
+      }
+    }
+  };
+
+  isAuthorized = filename =>
+    this.state.authorized.includes(mime.lookup(filename));
+
+  clearFile = () => this.setState({ file: null });
+
+  render() {
     const { modal, closeModal } = this.props;
+
     return (
       <Modal basic open={modal} onClose={closeModal}>
-        <ModalHeader>
-          Select an Image File
-        </ModalHeader>
+        <ModalHeader>Select an Image File</ModalHeader>
         <ModalContent>
           <Input
+            onChange={this.addFile}
             fluid
             label="File types: jpg, png"
             name="file"
@@ -18,15 +50,15 @@ class FileModal extends React.Component {
           />
         </ModalContent>
         <ModalActions>
-          <Button color="green" inverted>
-            <Icon name="checkmark"/> Send
+          <Button onClick={this.sendFile} color="green" inverted>
+            <Icon name="checkmark" /> Send
           </Button>
           <Button color="red" inverted onClick={closeModal}>
             <Icon name="remove" /> Cancel
           </Button>
         </ModalActions>
       </Modal>
-    )
+    );
   }
 }
 
