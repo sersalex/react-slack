@@ -2,7 +2,7 @@ import React from 'react';
 import firebase from '../../firebase';
 import { connect } from 'react-redux';
 import { setCurrentChannel } from '../../actions';
-import { Menu, MenuItem, Icon, Modal, ModalHeader, ModalContent, Form, FormField, Input, ModalActions, Button } from 'semantic-ui-react';
+import { Menu, MenuItem, Icon, Modal, ModalHeader, ModalContent, Form, FormField, Input, ModalActions, Button, MenuMenu } from 'semantic-ui-react';
 
 class Channels extends React.Component {
   state = {
@@ -119,7 +119,7 @@ class Channels extends React.Component {
     const { channels, modal } = this.state;
     return (
       <React.Fragment>
-        <Menu style={{ paddingBottom: '2em', background: '#3e113f' }} vertical>
+        <MenuMenu className="menu">
           <MenuItem>
             <span>
               <Icon name="exchange"/> CHANNELS
@@ -128,7 +128,7 @@ class Channels extends React.Component {
           </MenuItem>
         {/* Channels */}
         {this.displayChannels(channels)}
-        </Menu>
+        </MenuMenu>
 
         <Modal basic open={modal} onClose={this.closeModal}>
           <ModalHeader>
