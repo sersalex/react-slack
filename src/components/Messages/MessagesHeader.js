@@ -4,7 +4,7 @@ import HeaderSubHeader from 'semantic-ui-react/dist/commonjs/elements/Header/Hea
 
 class MessagesHeader extends React.Component {
   render () {
-    const { channelName, numUniqueUsers} = this.props;
+    const { channelName, numUniqueUsers, handleSearchChange, searchLoading} = this.props;
 
     return (
       <Segment clearing>
@@ -20,6 +20,8 @@ class MessagesHeader extends React.Component {
         {/* Channel Search Input */}
         <Header floated="right">
           <Input
+            loading={searchLoading}
+            onChange={handleSearchChange}
             size="mini"
             icon="search"
             name="serachTerm"
