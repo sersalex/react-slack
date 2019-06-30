@@ -5,7 +5,7 @@ import './App.css';
 import ColorPanel from './ColorPanel/ColorPanel';
 import SidePanel from './SidePanel/SidePanel';
 import Messages from './Messages/Messages';
-import MetaPannel from './MetaPannel/MetaPannel';
+import MetaPanel from './MetaPanel/MetaPanel';
 
 function App({ currentUser, currentChannel, isPrivateChannel }) {
   return (
@@ -23,7 +23,11 @@ function App({ currentUser, currentChannel, isPrivateChannel }) {
         />
       </GridColumn>
       <GridColumn width={4}>
-        <MetaPannel />
+        <MetaPanel
+          key={currentChannel && currentChannel.id}
+          currentChannel={currentChannel}
+          isPrivateChannel={isPrivateChannel}
+        />
       </GridColumn>
 
     </Grid>
