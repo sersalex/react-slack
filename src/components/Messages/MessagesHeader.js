@@ -4,7 +4,7 @@ import HeaderSubHeader from 'semantic-ui-react/dist/commonjs/elements/Header/Hea
 
 class MessagesHeader extends React.Component {
   render () {
-    const { channelName, numUniqueUsers, handleSearchChange, searchLoading, isPrivateChannel} = this.props;
+    const { channelName, numUniqueUsers, handleSearchChange, searchLoading, isPrivateChannel, handleStar, isChannelStarred} = this.props;
 
     return (
       <Segment clearing>
@@ -12,7 +12,13 @@ class MessagesHeader extends React.Component {
         <Header fluid="true" as="h2" floated="left" style={{marginBottom: 0}}>
           <span>
             {channelName}
-            {!isPrivateChannel && <Icon name={"star outline"} color="black"/>}
+            {!isPrivateChannel && (
+              <Icon
+                onClick={handleStar}
+                name={isChannelStarred ? 'star' : 'star outline'}
+                color={isChannelStarred ? 'yellow' : 'black'}/>
+              )
+            }
           </span>
           <HeaderSubHeader>{numUniqueUsers}</HeaderSubHeader>
         </Header>
@@ -24,7 +30,7 @@ class MessagesHeader extends React.Component {
             onChange={handleSearchChange}
             size="mini"
             icon="search"
-            name="serachTerm"
+            name="searchTerm"
             placeholder="SearchMessages"
           />
         </Header>
