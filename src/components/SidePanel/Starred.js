@@ -35,8 +35,12 @@ class Starred extends React.Component {
       .on('child_removed', snap => {
         const channelToRemove = { id: snap.key, ...snap.val() }
         const filteredChannels = this.state.starredChannels.filter(c => c.id !== channelToRemove.id)
-        this.setState({ starredChannels: filteredChannels })
+        this.setState({
+          starredChannels: filteredChannels
+        })
       })
+
+
   }
 
   changeChannel = channel => {
@@ -51,7 +55,7 @@ class Starred extends React.Component {
   }
 
   displayChannels = starredChannels =>
-    (starredChannels && starredChannels.length > 0) &&
+    starredChannels.length > 0 &&
       starredChannels.map(channel => (
         <MenuItem
           key={channel.id}
@@ -66,14 +70,14 @@ class Starred extends React.Component {
 
 
   render () {
-    const { starredChannels } = this.state.starredChannels;
+    const { starredChannels } = this.state;
     return (
       <MenuMenu className="menu">
         <MenuItem>
           <span>
             <Icon name="star" /> STARRED
             </span>{" "}
-          ({starredChannels && starredChannels.length})
+          ({starredChannels.length})
         </MenuItem>
         {this.displayChannels(starredChannels)}
       </MenuMenu>
