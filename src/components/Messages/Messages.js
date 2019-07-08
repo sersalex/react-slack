@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { setUserPosts } from "../../actions";
 import { Segment, CommentGroup } from "semantic-ui-react";
 import firebase from "../../firebase";
 
@@ -108,7 +110,8 @@ class Messages extends React.Component {
         messages: loadedMessages,
         messagesLoading: false
       });
-      this.countUniqueUsers(loadedMessages)
+      this.countUniqueUsers(loadedMessages);
+      this.countUserPosts(loadedMessages);
     });
   };
 
@@ -117,13 +120,28 @@ class Messages extends React.Component {
       .child(`${userId}/starred`)
       .once('value')
       .then(data => {
-        console.log('data', data.val())
         if (data.val() !== null) {
           const channelIds = Object.keys(data.val());
           const prevStarred = channelIds.includes(channelId);
           this.setState({isChannelStarred: prevStarred})
         }
       })
+  }
+
+  countUserPosts = messages => {
+    let userPosts = messages.reduce((acc, message) => {
+      if (message.user.name in acc) {
+        acc[message.user.name].count += 1
+      } else {
+        acc[message.user.name] = {
+          avatar: message.user.avatar,
+          count: 1
+        }
+      }
+      return acc
+    }, {});
+    this.props.setUserPosts(userPosts);
+    console.log(userPosts);
   }
 
   countUniqueUsers = messages => {
@@ -206,4 +224,4 @@ class Messages extends React.Component {
   }
 }
 
-export default Messages;
+export default connect(null, { setUserPosts })(Messages);
